@@ -1,0 +1,94 @@
+-- Gui to Lua
+-- Version: 3.2
+
+-- Instances:
+
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local kill = Instance.new("TextButton")
+local Player = Instance.new("TextBox")
+local credits = Instance.new("TextLabel")
+
+--Properties:
+
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+ScreenGui.ResetOnSpawn = false
+
+Frame.Parent = ScreenGui
+Frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Frame.BackgroundTransparency = 0.500
+Frame.Position = UDim2.new(0.606766939, 0, 0.345978767, 0)
+Frame.Size = UDim2.new(0, 180, 0, 136)
+
+kill.Name = "kill"
+kill.Parent = Frame
+kill.BackgroundColor3 = Color3.fromRGB(85, 85, 85)
+kill.BackgroundTransparency = 1.000
+kill.Position = UDim2.new(0, 0, 0.735290349, 0)
+kill.Size = UDim2.new(0, 180, 0, 36)
+kill.Font = Enum.Font.Kalam
+kill.Text = "Loop"
+kill.TextColor3 = Color3.fromRGB(255, 255, 255)
+kill.TextScaled = true
+kill.TextSize = 30.000
+kill.TextWrapped = true
+
+Player.Name = "Player"
+Player.Parent = Frame
+Player.BackgroundColor3 = Color3.fromRGB(67, 67, 67)
+Player.BackgroundTransparency = 1.000
+Player.Position = UDim2.new(0, 0, 0.382352948, 0)
+Player.Size = UDim2.new(0, 180, 0, 31)
+Player.Font = Enum.Font.Kalam
+Player.Text = "Target"
+Player.TextColor3 = Color3.fromRGB(255, 255, 255)
+Player.TextScaled = true
+Player.TextSize = 14.000
+Player.TextWrapped = true
+Player.FocusLost:connect(function()
+for i,v in pairs(game.Players:GetChildren()) do
+if (string.sub(string.lower(v.Name),1,string.len(Player.Text))) == string.lower(Player.Text) then
+Player.Text = v.Name
+end
+end
+end)
+
+credits.Name = "credits"
+credits.Parent = Frame
+credits.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+credits.BackgroundTransparency = 1.000
+credits.Size = UDim2.new(0, 180, 0, 37)
+credits.Font = Enum.Font.Kalam
+credits.Text = "Loop by Midngight v2"
+credits.TextColor3 = Color3.fromRGB(255, 255, 255)
+credits.TextScaled = true
+credits.TextSize = 14.000
+credits.TextWrapped = true
+-- Scripts:
+
+local function DMPFABK_fake_script() -- ScreenGui.LocalScript 
+    local script = Instance.new('LocalScript', ScreenGui)
+
+    frame = script.Parent.Frame --Name of your frame
+    frame.Draggable = true
+    frame.Active = true
+    frame.Selectable = true
+end
+coroutine.wrap(DMPFABK_fake_script)()
+
+
+
+
+
+kill.MouseButton1Click:connect(function()
+
+    local field = Player.Text
+
+    local LocalUser = game.Players.LocalPlayer
+    local ENEMY = field
+
+    for i = 1,4000 do
+        game.ReplicatedStorage.Remotes.Human_Punch:FireServer(LocalUser.Character.RightHand, "RightPunch", workspace[ENEMY].UpperTorso,5,true,"RightPunch",game.Players.LocalPlayer.Backpack.Boxing.Handle.Hit,5)
+        wait()
+    end
+end)
